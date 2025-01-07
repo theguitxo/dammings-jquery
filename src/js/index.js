@@ -3,6 +3,9 @@ import { stations_selector } from "./stations_selector.js";
 const URL =
   "https://analisi.transparenciacatalunya.cat/resource/gn9e-3qhr.json";
 
+let minDate = new Date();
+let maxDate = new Date();
+
 /**
  * Crea un DIV para el backdrop del loader spinner
  * @returns {HTMLDivElement} Un elemento DIV con la clase "backdrop"
@@ -60,6 +63,30 @@ function setStationsList(data) {
 }
 
 /**
+ * Establece las fechas mínima y máxima para el selector de fecha
+ * @param {Array<Object>} data
+ */
+function setMiMaxDate(data) {
+  if (data.length) {
+    data.forEach((item) => {
+      const itemDate = new Date(item.dia);
+
+      if (itemDate.getTime() < minDate.getTime()) {
+        minDate = itemDate;
+      }
+
+      if (itemDate.getTime() > maxDate.getTime()) {
+        maxDate = itemDate;
+      }
+    });
+  }
+
+  minDate = new Date(minDate.getTime() + 86400000);
+  console.log(minDate);
+  console.log(maxDate);
+}
+
+/**
  * Realiza la llamada al servicio para obtener los datos
  */
 function loadData() {
@@ -75,6 +102,11 @@ function loadData() {
     success: (data) => {
       $("#stations-selector").removeClass("hidden");
       setStationsList(data);
+      setMiMaxDate(data);
+      $("#datepicker").datepicker({
+        minDate,
+        maxDate,
+      });
       stations_selector.initAvailableList();
       stations_selector.setOptions();
       stations_selector.initButtons();

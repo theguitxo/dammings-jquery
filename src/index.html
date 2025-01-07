@@ -1,5 +1,8 @@
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Información embalses</title>
     <link
       rel="icon"
@@ -15,8 +18,12 @@
       href="./assets/favicon/apple-touch-icon.png"
     />
     <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./assets/jquery-ui/jquery-ui.js"></script>
     <script src="js/index.js"></script>
+
+    <link rel="stylesheet" href="./assets/jquery-ui/jquery-ui.css" />
     <link rel="stylesheet" href="styles/styles.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,18 +34,33 @@
     />
   </head>
   <body>
-    <div id="stations-selector" class="hidden station-selector">
-      <div>Disponibles</div>
-      <div>&nbsp;</div>
-      <div>Seleccionados</div>
-      <select class="station-select" name="available" size="5"></select>
-      <div class="station-selector-buttons">
-        <button data-direction="selected" data-type="single">&gt;</button>
-        <button data-direction="selected" data-type="all">&gt;&gt;</button>
-        <button data-direction="available" data-type="single">&lt;</button>
-        <button data-direction="available" data-type="all">&lt;&lt;</button>
+    <div id="stations-selector" class="hidden main-container">
+      <div class="item-container">
+        <div class="title">Embalses</div>
+        <div class="station-selector">
+          <div>
+            <div>Disponibles</div>
+            <select class="station-select" name="available" size="5"></select>
+          </div>
+          <div class="station-selector-buttons">
+            <button data-direction="selected" data-type="single">&gt;</button>
+            <button data-direction="selected" data-type="all">&gt;&gt;</button>
+            <button data-direction="available" data-type="single">&lt;</button>
+            <button data-direction="available" data-type="all">&lt;&lt;</button>
+          </div>
+          <div>
+            <div>Seleccionados</div>
+            <select class="station-select" name="selected" size="5"></select>
+          </div>
+        </div>
       </div>
-      <select class="station-select" name="selected" size="5"></select>
+      <div class="item-container">
+        <div class="title">Fecha</div>
+        <div id="datepicker"></div>
+      </div>
+      <div class="last-row">
+        <button class="search-button">Buscar</button>
+      </div>
     </div>
   </body>
 </html>

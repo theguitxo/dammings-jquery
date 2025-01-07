@@ -13,10 +13,50 @@ body {
   display: none !important;
 }
 
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+
+  & .last-row {
+    display: grid;
+    justify-content: end;
+
+    @media screen and (min-width: 601px) {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+}
+
+.item-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & .title {
+    font-size: 1.25rem;
+  }
+}
+
 .station-selector {
   display: grid;
   grid-template-columns: 300px 3rem 300px;
   gap: 1rem;
+
+  @media screen and (min-width: 1000px) {
+    grid-template-columns: 500px 3rem 500px;
+  }
+
+  @media screen and (max-width: 600px) {
+    grid-template-rows: 1fr auto 1fr;
+    grid-template-columns: 1fr;
+  }
 }
 
 .station-selector-buttons {
@@ -25,6 +65,10 @@ body {
   gap: 1rem;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: row;
+  }
 
   & button {
     height: 2rem;
@@ -45,5 +89,23 @@ body {
 
   & option {
     padding: 0.25rem;
+  }
+}
+
+#datepicker {
+  & > div {
+    width: 100%;
+  }
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: gray;
+    color: white;
   }
 }
