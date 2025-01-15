@@ -10,6 +10,9 @@ export const stations_selector = {
     this.available = Array.from(stations_selector.STATIONS);
   },
 
+  /**
+   * Establece la acción a realizar por los botones al pulsar
+   */
   initButtons: function () {
     const self = this;
     $(".station-selector-buttons>button").on("click", function (event) {
@@ -27,6 +30,12 @@ export const stations_selector = {
     });
   },
 
+  /**
+   * Mueve un embalse de una lista a otra
+   * @param {string} direction Hacia donde ha de moverse el valor, si hacia disponible o seleccionado
+   * @param {string} type Tipo de movimiento, si un solo valor o todos los posibles
+   * @param {string} value El valor del embalse a mover
+   */
   moveStationValue: function (direction, type, value) {
     const origin = direction === "selected" ? "available" : "selected";
     const destination = direction === "selected" ? "selected" : "available";
@@ -39,6 +48,9 @@ export const stations_selector = {
     }
   },
 
+  /**
+   * Realiza una comprobaciones para habilitar o deshabilitar los botones del selector de embalses
+   */
   checkButtonsStatus: function () {
     const availableSelected = $(
       'select[name="available"] option:selected'
@@ -73,6 +85,9 @@ export const stations_selector = {
     });
   },
 
+  /**
+   * Establece las opciones para los selectores de embalses disponibles y seleccionadas
+   */
   setOptions: function () {
     this.emptySelector('select[name="available"]');
     this.emptySelector('select[name="selected"]');
@@ -86,15 +101,38 @@ export const stations_selector = {
     );
   },
 
+  /**
+   * Elimina todos los <options> de un <select>
+   * @param {string} selector Identificador del select para consultarlo con jQuery
+   */
   emptySelector: function (selector) {
     const obj = $(selector);
     obj.empty();
   },
 
+  /**
+   * Inserta una lista de <options> en un <select>
+   * @param {string} selector Identificador del select para consultarlo con jQuery
+   * @param {string} items Lista de elementos para añadir como <options>
+   */
   fillSelector: function (selector, items) {
     const obj = $(selector);
     items.forEach(function (item) {
       obj.append(new Option(item, item));
     });
+  },
+
+  /**
+   * Establece los valores de las estaciones en el objeto que maneja los selectores
+   * @param {Array<Object>} data
+   */
+  setStationsList: function (data) {
+    if (data.length) {
+      data.forEach((item) => {
+        if (!this.STATIONS.has(item.estaci)) {
+          this.STATIONS.add(item.estaci);
+        }
+      });
+    }
   },
 };
