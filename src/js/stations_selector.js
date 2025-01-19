@@ -2,6 +2,7 @@ export const stations_selector = {
   STATIONS: new Set(),
   available: [],
   selected: [],
+  selectedEvent: "stationsSelected",
 
   /**
    * Establece la lista de estaciones disponibles para seleccionar
@@ -27,6 +28,14 @@ export const stations_selector = {
       self.moveStationValue(direction, type, value);
       self.setOptions();
       self.checkButtonsStatus();
+
+      document.dispatchEvent(
+        new CustomEvent(self.selectedEvent, {
+          detail: {
+            total: self.selected.length,
+          },
+        })
+      );
     });
   },
 

@@ -31,5 +31,8 @@ function loadData() {
 }
 
 $(document).ready(() => {
+  document.addEventListener(stations_selector.selectedEvent, (event) =>
+    $("#search-button").prop("disabled", !event.detail.total)
+  );
   loadData();
 });
