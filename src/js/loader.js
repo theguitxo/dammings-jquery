@@ -1,4 +1,4 @@
-export const loader = {
+export const LOADER = {
   /**
    * Crea un DIV para el backdrop del loader spinner
    * @returns {HTMLDivElement} Un elemento DIV con la clase "backdrop"

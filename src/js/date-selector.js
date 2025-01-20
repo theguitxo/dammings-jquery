@@ -1,4 +1,4 @@
-export const date_selector = {
+export const DATE_SELECTOR = {
   minDate: new Date(),
   maxDate: new Date(),
   selectedDate: null,
@@ -41,7 +41,20 @@ export const date_selector = {
    * @param {Date} date Objeto de tipo fecha con el valor seleccionado
    */
   setSelectedDate: function (date) {
-    this.selectedDate = date;
+    let day = null;
+    let month = null;
+    let year = null;
+    if (!!date.id) {
+      day = date.selectedDay;
+      month = date.selectedMonth;
+      year = date.selectedYear;
+    } else {
+      day = date.getDate();
+      month = date.getMonth();
+      year = date.getFullYear();
+    }
+
+    this.selectedDate = new Date(Date.UTC(year, month, day));
     this.removeDatepickerTodayHighlight();
   },
 

@@ -1,4 +1,4 @@
-export const stations_selector = {
+export const STATIONS_SELECTOR = {
   STATIONS: new Set(),
   available: [],
   selected: [],
@@ -8,7 +8,7 @@ export const stations_selector = {
    * Establece la lista de estaciones disponibles para seleccionar
    */
   initAvailableList: function () {
-    this.available = Array.from(stations_selector.STATIONS);
+    this.available = Array.from(this.STATIONS);
   },
 
   /**

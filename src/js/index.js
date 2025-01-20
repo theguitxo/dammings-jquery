@@ -1,6 +1,7 @@
-import { date_selector } from "./date_selector.js";
-import { loader } from "./loader.js";
-import { stations_selector } from "./stations_selector.js";
+import { DATA_MANAGER } from "./data-manager.js";
+import { DATE_SELECTOR } from "./date-selector.js";
+import { LOADER } from "./loader.js";
+import { STATIONS_SELECTOR } from "./stations-selector.js";
 
 const URL =
   "https://analisi.transparenciacatalunya.cat/resource/gn9e-3qhr.json";
@@ -13,26 +14,35 @@ function loadData() {
     type: "GET",
     dataType: "JSON",
     beforeSend: () => {
-      loader.showLoader();
+      LOADER.showLoader();
     },
     complete: () => {
-      loader.hideLoader();
+      LOADER.hideLoader();
     },
     success: (data) => {
       $("#stations-selector").removeClass("hidden");
-      date_selector.initDatepicker(data);
-      stations_selector.setStationsList(data);
-      stations_selector.initAvailableList();
-      stations_selector.setOptions();
-      stations_selector.initButtons();
-      stations_selector.checkButtonsStatus();
+      DATE_SELECTOR.initDatepicker(data);
+      STATIONS_SELECTOR.setStationsList(data);
+      STATIONS_SELECTOR.initAvailableList();
+      STATIONS_SELECTOR.setOptions();
+      STATIONS_SELECTOR.initButtons();
+      STATIONS_SELECTOR.checkButtonsStatus();
+      DATA_MANAGER.setData(data);
+      DATA_MANAGER.setContainer($("#result"));
+
+      $("#search-button").click(() => {
+        DATA_MANAGER.setDateFilter(DATE_SELECTOR.selectedDate);
+        DATA_MANAGER.setStationsFilter(STATIONS_SELECTOR.selected);
+        DATA_MANAGER.filterData();
+      });
+
+      document.addEventListener(STATIONS_SELECTOR.selectedEvent, (event) =>
+        $("#search-button").prop("disabled", !event.detail.total)
+      );
     },
   });
 }
 
 $(document).ready(() => {
-  document.addEventListener(stations_selector.selectedEvent, (event) =>
-    $("#search-button").prop("disabled", !event.detail.total)
-  );
   loadData();
 });
