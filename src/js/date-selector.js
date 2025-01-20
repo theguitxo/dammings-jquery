@@ -1,6 +1,6 @@
 export const DATE_SELECTOR = {
-  minDate: new Date(),
-  maxDate: new Date(),
+  minDate: null,
+  maxDate: null,
   selectedDate: null,
   dt: null,
 
@@ -13,11 +13,17 @@ export const DATE_SELECTOR = {
       data.forEach((item) => {
         const itemDate = new Date(item.dia);
 
-        if (itemDate.getTime() < this.minDate.getTime()) {
+        if (
+          this.minDate === null ||
+          itemDate.getTime() < this.minDate.getTime()
+        ) {
           this.minDate = itemDate;
         }
 
-        if (itemDate.getTime() > this.maxDate.getTime()) {
+        if (
+          this.maxDate === null ||
+          itemDate.getTime() > this.maxDate.getTime()
+        ) {
           this.maxDate = itemDate;
         }
       });

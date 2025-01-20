@@ -22,7 +22,7 @@ export const DATA_MANAGER = {
   },
 
   emptyContainer: function () {
-    if (this.container && this.container.children()) {
+    if (this.container?.children()) {
       this.container.children().remove();
     }
   },
@@ -39,6 +39,7 @@ export const DATA_MANAGER = {
     if (!this.filteredData.length) {
       this.showNoData();
     } else {
+      this.showData();
     }
   },
 
@@ -49,5 +50,51 @@ export const DATA_MANAGER = {
     banner.innerHTML = "NO SE HAN ENCONTRADO DATOS";
 
     this.container.append(banner);
+  },
+
+  createDataCell: function (value) {
+    const obj = document.createElement("td");
+    obj.innerHTML = value;
+    return obj;
+  },
+
+  createTableHeader: function () {
+    const titles = [
+      "FECHA",
+      "EMBALSE",
+      "NIVEL ABSOLUTO",
+      "PORCENTAJE VOLUMEN EMBALSADO",
+      "VOLUMEN EMBALSADO",
+    ];
+    const header = document.createElement("tr");
+    titles.forEach((column) => {
+      const obj = document.createElement("th");
+      obj.innerHTML = column;
+      header.appendChild(obj);
+    });
+
+    return header;
+  },
+
+  showData: function () {
+    const table = document.createElement("table");
+    table.classList.add("data-table");
+    table.appendChild(this.createTableHeader());
+
+    this.filteredData.forEach((rowData) => {
+      const row = document.createElement("tr");
+      const data = [
+        new Date(rowData.dia).toLocaleDateString(),
+        rowData.estaci,
+        `${rowData.nivell_absolut} msnm`,
+        `${rowData.percentatge_volum_embassat} %`,
+        `${rowData.volum_embassat} m<sup>3</sup>`,
+      ];
+      data.forEach((item) => row.appendChild(this.createDataCell(item)));
+
+      table.appendChild(row);
+    });
+
+    this.container.append(table);
   },
 };
