@@ -1,8 +1,29 @@
 .data-table {
+  border-collapse: collapse;
+
   tr {
     th,
     td {
       padding: 1rem;
+
+      &.text-end {
+        text-align: end;
+      }
+
+      & button {
+        cursor: pointer;
+      }
+    }
+
+    th {
+      background-color: darkgray;
+    }
+
+    &:nth-child(even) {
+      background-color: gainsboro;
+    }
+    &:nth-child(odd) {
+      background-color: beige;
     }
   }
 }

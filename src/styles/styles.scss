@@ -1,5 +1,6 @@
 @import url("loader.scss");
 @import url("data-table.scss");
+@import url("back-drop.scss");
 
 * {
   box-sizing: border-box;
@@ -108,5 +109,12 @@ body {
   &:hover {
     background-color: gray;
     color: white;
+  }
+}
+
+#result {
+  width: 100%;
+  @media screen and (max-width: 600px) {
+    overflow-x: auto;
   }
 }

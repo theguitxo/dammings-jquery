@@ -1,3 +1,4 @@
+import { BACK_DROP } from "./back-drop.js";
 import { DATA_MANAGER } from "./data-manager.js";
 import { DATE_SELECTOR } from "./date-selector.js";
 import { LOADER } from "./loader.js";
@@ -44,5 +45,7 @@ function loadData() {
 }
 
 $(document).ready(() => {
+  BACK_DROP.init();
+  LOADER.setBackdrop(BACK_DROP);
   loadData();
 });

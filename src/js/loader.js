@@ -1,12 +1,13 @@
 export const LOADER = {
+  backdrop: null,
+  backdropElement: null,
+
   /**
-   * Crea un DIV para el backdrop del loader spinner
-   * @returns {HTMLDivElement} Un elemento DIV con la clase "backdrop"
+   * Establece el valor para el objeto del backdrop
+   * @param {Object} backdrop Objecto que maneja el backdrop
    */
-  createDivBackDrop: function () {
-    const backdrop = document.createElement("div");
-    backdrop.classList.add("backdrop");
-    return backdrop;
+  setBackdrop: function (backdrop) {
+    this.backdrop = backdrop;
   },
 
   /**
@@ -23,21 +24,15 @@ export const LOADER = {
    * Muestra el loader spinner
    */
   showLoader: function () {
-    const backdrop = this.createDivBackDrop();
     const loader = this.createDivLoader();
 
-    backdrop.appendChild(loader);
-    document.body.classList.add("backdrop--no-scroll");
-    document.body.appendChild(backdrop);
+    this.backdropElement = this.backdrop.addElement(loader);
   },
 
   /**
    * Eliminar el loader spinner
    */
   hideLoader: function () {
-    if ($(".backdrop").length) {
-      $(".backdrop").remove();
-      document.body.classList.remove("backdrop--no-scroll");
-    }
+    this.backdrop.removeElement(this.backdropElement);
   },
 };

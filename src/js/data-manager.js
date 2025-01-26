@@ -52,9 +52,18 @@ export const DATA_MANAGER = {
     this.container.append(banner);
   },
 
-  createDataCell: function (value) {
+  createDataCell: function (value, classname, isHTML) {
     const obj = document.createElement("td");
-    obj.innerHTML = value;
+    if (isHTML) {
+      obj.innerHTML = value;
+    } else {
+      obj.appendChild(value);
+    }
+
+    if (classname) {
+      obj.classList.add(classname);
+    }
+
     return obj;
   },
 
@@ -65,6 +74,7 @@ export const DATA_MANAGER = {
       "NIVEL ABSOLUTO",
       "PORCENTAJE VOLUMEN EMBALSADO",
       "VOLUMEN EMBALSADO",
+      "",
     ];
     const header = document.createElement("tr");
     titles.forEach((column) => {
@@ -83,14 +93,48 @@ export const DATA_MANAGER = {
 
     this.filteredData.forEach((rowData) => {
       const row = document.createElement("tr");
+      const button = document.createElement("button");
+      button.innerHTML = "Más datos";
+      button.addEventListener("click", () => {
+        console.log(rowData);
+      });
+
       const data = [
-        new Date(rowData.dia).toLocaleDateString(),
-        rowData.estaci,
-        `${rowData.nivell_absolut} msnm`,
-        `${rowData.percentatge_volum_embassat} %`,
-        `${rowData.volum_embassat} m<sup>3</sup>`,
+        {
+          data: new Date(rowData.dia).toLocaleDateString(),
+          classname: "",
+          isHTML: true,
+        },
+        {
+          data: rowData.estaci,
+          classname: "",
+          isHTML: true,
+        },
+        {
+          data: `${rowData.nivell_absolut} msnm`,
+          classname: "text-end",
+          isHTML: true,
+        },
+        {
+          data: `${rowData.percentatge_volum_embassat} %`,
+          classname: "text-end",
+          isHTML: true,
+        },
+        {
+          data: `${rowData.volum_embassat} m<sup>3</sup>`,
+          classname: "text-end",
+          isHTML: true,
+        },
+        {
+          data: button,
+          isHTML: false,
+        },
       ];
-      data.forEach((item) => row.appendChild(this.createDataCell(item)));
+      data.forEach((item) =>
+        row.appendChild(
+          this.createDataCell(item.data, item.classname, item.isHTML)
+        )
+      );
 
       table.appendChild(row);
     });
