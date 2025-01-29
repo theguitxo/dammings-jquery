@@ -1,6 +1,7 @@
 @import url("loader.scss");
 @import url("data-table.scss");
 @import url("back-drop.scss");
+@import url("more-info-modal.scss");
 
 * {
   box-sizing: border-box;
@@ -114,6 +115,7 @@ body {
 
 #result {
   width: 100%;
+  margin: 0.5rem auto;
   @media screen and (max-width: 600px) {
     overflow-x: auto;
   }

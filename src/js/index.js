@@ -2,6 +2,7 @@ import { BACK_DROP } from "./back-drop.js";
 import { DATA_MANAGER } from "./data-manager.js";
 import { DATE_SELECTOR } from "./date-selector.js";
 import { LOADER } from "./loader.js";
+import { MORE_INFO_MODAL } from "./more-info-modal.js";
 import { STATIONS_SELECTOR } from "./stations-selector.js";
 
 const URL =
@@ -40,6 +41,11 @@ function loadData() {
       document.addEventListener(STATIONS_SELECTOR.selectedEvent, (event) =>
         $("#search-button").prop("disabled", !event.detail.total)
       );
+
+      document.addEventListener(DATA_MANAGER.moreDataEvent, (event) => {
+        MORE_INFO_MODAL.setData(event.detail.data);
+        MORE_INFO_MODAL.showModal();
+      });
     },
   });
 }
@@ -47,5 +53,6 @@ function loadData() {
 $(document).ready(() => {
   BACK_DROP.init();
   LOADER.setBackdrop(BACK_DROP);
+  MORE_INFO_MODAL.setBackdrop(BACK_DROP);
   loadData();
 });

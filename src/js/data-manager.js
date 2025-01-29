@@ -4,6 +4,7 @@ export const DATA_MANAGER = {
   stationsFilter: null,
   dateFilter: null,
   filteredData: null,
+  moreDataEvent: "SHOW_MORE_DATA",
 
   setData: function (data) {
     this.data = data;
@@ -87,6 +88,7 @@ export const DATA_MANAGER = {
   },
 
   showData: function () {
+    const self = this;
     const table = document.createElement("table");
     table.classList.add("data-table");
     table.appendChild(this.createTableHeader());
@@ -96,7 +98,13 @@ export const DATA_MANAGER = {
       const button = document.createElement("button");
       button.innerHTML = "Más datos";
       button.addEventListener("click", () => {
-        console.log(rowData);
+        document.dispatchEvent(
+          new CustomEvent(self.moreDataEvent, {
+            detail: {
+              data: rowData,
+            },
+          })
+        );
       });
 
       const data = [
