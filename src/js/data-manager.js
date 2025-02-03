@@ -149,4 +149,18 @@ export const DATA_MANAGER = {
 
     this.container.append(table);
   },
+
+  getLastSevenDaysData: function (item) {
+    const MS_SEVEN_DAYS = 604800000;
+    const currentDate = new Date(item.dia);
+    const initDate = new Date(currentDate.getTime() - MS_SEVEN_DAYS);
+    return this.data?.filter((data) => {
+      const dataDate = new Date(data.dia).getTime();
+      return (
+        dataDate > initDate.getTime() &&
+        dataDate <= currentDate.getTime() &&
+        data.estaci === item.estaci
+      );
+    });
+  },
 };

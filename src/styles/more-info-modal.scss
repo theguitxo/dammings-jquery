@@ -61,3 +61,27 @@
     padding: 1rem;
   }
 }
+
+.data-table {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__row {
+    display: flex;
+  }
+
+  &__date {
+    flex: 1 1 auto;
+  }
+
+  &__bar {
+    flex: 5 1 auto;
+  }
+
+  &__value {
+    flex: 1 1 auto;
+  }
+}
