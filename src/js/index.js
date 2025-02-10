@@ -59,8 +59,6 @@ function loadData() {
 
       const values = DATA_MANAGER.getLastSevenDaysData(station);
 
-      console.log(values);
-
       const box = document.createElement("div");
       box.classList.add("data-table__container");
       values.reverse().forEach((value) => {
@@ -77,6 +75,10 @@ function loadData() {
       });
 
       $("#table").append(box);
+
+      document
+        .getElementById("value1")
+        .style.setProperty("--value", '"01-02-2025"');
     },
   });
 }
