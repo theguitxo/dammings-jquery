@@ -85,3 +85,47 @@
     flex: 1 1 auto;
   }
 }
+
+.a {
+  &_container {
+    padding: 2rem;
+    display: flex;
+  }
+
+  &_bar {
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 1rem;
+
+    &::after {
+      content: "10-02-2025";
+      transform: rotate(-90deg) translate(60%, -1.5rem);
+      height: 0;
+      margin: 0 -3rem;
+    }
+  }
+
+  &_item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_value {
+    width: 3rem;
+    background-color: cyan;
+    height: 33%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  &_date {
+    margin: 2rem 0;
+    transform: rotate(-90deg);
+  }
+}
