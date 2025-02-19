@@ -96,10 +96,13 @@
     height: 200px;
     display: flex;
     align-items: flex-end;
-    padding: 0 1rem;
+    margin: 0 1rem;
 
+    --value: "02-02-2025";
+
+    transform: translateX(-15px);
     &::after {
-      content: "10-02-2025";
+      content: var(--value);
       transform: rotate(-90deg) translate(60%, -1.5rem);
       height: 0;
       width: max-content;
@@ -113,6 +116,8 @@
     gap: 0.5rem;
     justify-content: center;
     align-items: center;
+    transform: translateX(-10px);
+    margin: 0 10px;
   }
 
   &_value {
