@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 export const BACK_DROP = {
   backdrop: null,
   elements: new Map(),
@@ -26,7 +28,7 @@ export const BACK_DROP = {
   },
 
   addElement: function (element) {
-    const key = crypto.randomUUID();
+    const key = uuidv4();
     this.elements.set(key, element);
 
     if (!this.showing) {

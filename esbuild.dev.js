@@ -38,7 +38,7 @@ await ctx.watch();
 console.log("\x1b[34m%s\x1b[0m", "Watching for changes...");
 
 const { host, port } = await ctx.serve({
-  host: "127.0.0.1",
+  host: "0.0.0.0",
   port: 3000,
   servedir: "dist",
 });

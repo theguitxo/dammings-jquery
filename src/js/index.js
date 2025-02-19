@@ -82,6 +82,7 @@ function loadData() {
 }
 
 $(document).ready(() => {
+  console.log("Document ready");
   BACK_DROP.init();
   LOADER.setBackdrop(BACK_DROP);
   MORE_INFO_MODAL.setBackdrop(BACK_DROP);

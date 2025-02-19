@@ -3,6 +3,12 @@ export const STATIONS_SELECTOR = {
   available: [],
   selected: [],
   selectedEvent: "stationsSelected",
+  availableSelected: undefined,
+  selectedSelected: undefined,
+  _available: "available",
+  _selected: "selected",
+  _single: "single",
+  _all: "all",
 
   /**
    * Establece la lista de estaciones disponibles para seleccionar
@@ -20,11 +26,10 @@ export const STATIONS_SELECTOR = {
       event.preventDefault();
       const direction = $(this).data("direction");
       const type = $(this).data("type");
-      const value = $(
-        `select[name="${
-          direction === "selected" ? "available" : "selected"
-        }"] option:selected`
-      ).val();
+      const value =
+        direction === self._available
+          ? self.selectedSelected
+          : self.availableSelected;
       self.moveStationValue(direction, type, value);
       self.setOptions();
       self.checkButtonsStatus();
@@ -46,44 +51,46 @@ export const STATIONS_SELECTOR = {
    * @param {string} value El valor del embalse a mover
    */
   moveStationValue: function (direction, type, value) {
-    const origin = direction === "selected" ? "available" : "selected";
-    const destination = direction === "selected" ? "selected" : "available";
-    if (type === "single") {
+    const origin =
+      direction === this._selected ? this._available : this._selected;
+    const destination =
+      direction === this._selected ? this._selected : this._available;
+    if (type === this._single) {
       this[destination].push(value);
       this[origin] = this[origin].filter((item) => item !== value);
     } else {
       this[destination] = this[destination].concat(this[origin]);
       this[origin] = [];
     }
+    this.selectedSelected = undefined;
+    this.availableSelected = undefined;
   },
 
   /**
    * Realiza una comprobaciones para habilitar o deshabilitar los botones del selector de embalses
    */
   checkButtonsStatus: function () {
-    const availableSelected = $(
-      'select[name="available"] option:selected'
-    ).length;
-    const selectedSelected = $(
-      'select[name="selected"] option:selected'
-    ).length;
-
+    const self = this;
     $(".station-selector-buttons>button").each((_index, element) => {
       const direction = $(element).data("direction");
       const type = $(element).data("type");
 
       const conditionAvailableSingle =
-        direction === "selected" &&
-        type === "single" &&
-        (!this.available.length || !availableSelected);
+        direction === self._selected &&
+        type === self._single &&
+        (!this.available.length || !this.availableSelected);
       const conditionAvailableAll =
-        direction === "selected" && type === "all" && !this.available.length;
+        direction === self._selected &&
+        type === self._all &&
+        !this.available.length;
       const conditionSelectedSingle =
-        direction === "available" &&
-        type === "single" &&
-        (!this.selected.length || !selectedSelected);
+        direction === self._available &&
+        type === self._single &&
+        (!this.selected.length || !this.selectedSelected);
       const conditionSelectedAll =
-        direction === "available" && type === "all" && !this.selected.length;
+        direction === self._available &&
+        type === self._all &&
+        !this.selected.length;
       $(element).attr(
         "disabled",
         conditionAvailableAll ||
@@ -98,16 +105,24 @@ export const STATIONS_SELECTOR = {
    * Establece las opciones para los selectores de embalses disponibles y seleccionadas
    */
   setOptions: function () {
-    this.emptySelector('select[name="available"]');
-    this.emptySelector('select[name="selected"]');
-
-    this.fillSelector('select[name="available"]', this.available);
-    this.fillSelector('select[name="selected"]', this.selected);
-
-    $('select[name="available"] option, select[name="selected"] option').on(
-      "click",
-      () => this.checkButtonsStatus()
-    );
+    const self = this;
+    const idAvailable = `#${self._available}`;
+    const idSelected = `#${self._selected}`;
+    this.emptySelector(idAvailable);
+    this.emptySelector(idSelected);
+    this.fillSelector(idAvailable, this.available);
+    this.fillSelector(idSelected, this.selected);
+    $(`${idAvailable} .option, ${idSelected} .option`).on("click", function () {
+      const id = $(this).parent().attr("id");
+      if (id === self._available) {
+        self.availableSelected = $(this).html();
+      } else {
+        self.selectedSelected = $(this).html();
+      }
+      $(`#${id} .option`).removeClass("selected");
+      $(this).addClass("selected");
+      self.checkButtonsStatus();
+    });
   },
 
   /**
@@ -127,7 +142,7 @@ export const STATIONS_SELECTOR = {
   fillSelector: function (selector, items) {
     const obj = $(selector);
     items.forEach(function (item) {
-      obj.append(new Option(item, item));
+      obj.append(`<div class="option">${item}</div>`);
     });
   },
 
