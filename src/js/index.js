@@ -48,37 +48,6 @@ function loadData() {
         );
         MORE_INFO_MODAL.showModal();
       });
-
-      const station = {
-        dia: "2025-01-31T00:00:00.000",
-        estaci: "Embassament de Darnius Boadella (Darnius)",
-        nivell_absolut: 135.95,
-        percentatge_volum_embassat: 17,
-        volum_embassat: 10.4,
-      };
-
-      const values = DATA_MANAGER.getLastSevenDaysData(station);
-
-      const box = document.createElement("div");
-      box.classList.add("data-table__container");
-      values.reverse().forEach((value) => {
-        const row = document.createElement("div");
-        row.classList.add("data-table__row");
-
-        const dateCell = document.createElement("div");
-        dateCell.classList.add("data-table__date");
-        dateCell.textContent = new Date(value.dia).toLocaleDateString();
-
-        row.appendChild(dateCell);
-
-        box.appendChild(row);
-      });
-
-      $("#table").append(box);
-
-      document
-        .getElementById("value1")
-        .style.setProperty("--value", '"01-02-2025"');
     },
   });
 }
